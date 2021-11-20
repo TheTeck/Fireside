@@ -1,6 +1,8 @@
 import React from 'react';
-import './HomePage.scss';
 import { useHistory } from 'react-router-dom';
+
+import './HomePage.scss';
+import userService from '../../utils/userService';
 import CustomButton from '../../components/CustomButton/CustomButton';
 
 export default function HomePage(props) {
@@ -15,6 +17,11 @@ export default function HomePage(props) {
         history.push('/onboarding');
     }
 
+    function handleGoToDash () {
+        console.log(userService.getUser())
+        history.push('/dashboard');
+    }
+
     return (
        <div>
             <div className="container" style={{ backgroundImage: "url(/fireside.png)" } }>
@@ -22,10 +29,16 @@ export default function HomePage(props) {
                     <h1 className="homepage-title">FIRESIDE</h1>
                     <h3 className="stupid-inspirational-quote">Making intergenerational connections</h3>
                 </div>
-                <div className="btn-container">
-                    <CustomButton handleCustomClick={handleLoginClick}>Login</CustomButton>
-                    <CustomButton handleCustomClick={handleSignupClick}>Signup</CustomButton>
-                </div>
+                {
+                    !userService.getUser() ? 
+                        <div className="btn-container">
+                            <CustomButton handleCustomClick={handleLoginClick}>Login</CustomButton>
+                            <CustomButton handleCustomClick={handleSignupClick}>Signup</CustomButton> 
+                        </div>
+                    :   <div className="btn-container">
+                            <CustomButton handleCustomClick={handleGoToDash}>Dashboard</CustomButton>
+                        </div>                
+                }
             </div>
         </div>
     )

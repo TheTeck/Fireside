@@ -7,7 +7,7 @@ export default function MatchSelection ({ selectUser, skipUser, match }) {
 
     function formatInfo (arr) {
         let output = '';
-        if (arr.length > 2) {
+        if (arr.length >= 2) {
             let frontArr = arr.slice(0, arr.length-1);
             let commaSeperatedArr = frontArr.join(', ');
             output = commaSeperatedArr + ' & ' + arr[arr.length-1];
@@ -23,6 +23,7 @@ export default function MatchSelection ({ selectUser, skipUser, match }) {
     function handleSelectMatch () {
         selectUser({ match: match.username });
     }
+    console.log(match)
 
     let descriptions = match.description ? formatInfo(match.description) : '';
     let offerings = match.whatToOffer ? formatInfo(match.whatToOffer) : '';

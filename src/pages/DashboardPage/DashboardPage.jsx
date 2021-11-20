@@ -7,6 +7,7 @@ import userService from "../../utils/userService";
 export default function DashboardPage ({ handleLogout }) {
 
   const [matches, setMatches] = useState([]);
+  const [gotAllMatches, setGotAllMatches] = useState(false);
   const user = userService.getUser();
   const history = useHistory();
 
@@ -28,6 +29,7 @@ export default function DashboardPage ({ handleLogout }) {
 
   // Retrieve all the users "that match"
   async function getAllUsers () {
+    setGotAllMatches(true);
     try {
       let data = await userService.getAll();
       let filteredUsers = filterUsers(data.users);
@@ -51,7 +53,8 @@ export default function DashboardPage ({ handleLogout }) {
 
   // Pull all users whenever dashboard renders
   useEffect(() => {
-    getAllUsers();
+    if (!gotAllMatches)
+      getAllUsers();
   })
 
   return (
