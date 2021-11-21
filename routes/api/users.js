@@ -10,6 +10,7 @@ router.post('/login', usersCtrl.login);
 router.put('/:id', isAuthorized, usersCtrl.update);
 router.get('/', isAuthorized, usersCtrl.getAll);
 router.get('/:id', isAuthorized, usersCtrl.getOne);
+router.delete('/', isAuthorized, usersCtrl.deleteAll);
 
 function isAuthorized(req, res, next) {
     if (req.user) 

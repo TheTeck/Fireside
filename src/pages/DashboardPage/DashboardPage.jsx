@@ -11,6 +11,10 @@ export default function DashboardPage ({ handleLogout }) {
   const user = userService.getUser();
   const history = useHistory();
 
+  if (!user) {
+    history.push('/');
+  }
+
   function handleGetMatch () {
     history.push({
       pathname: '/matching',
@@ -25,6 +29,18 @@ export default function DashboardPage ({ handleLogout }) {
   function handleLogoutClick () {
     handleLogout();
     history.push('/');
+  }
+
+  //// Only for testing database
+  //// Remove before deployment
+  async function handleDeleteAllUsers () {
+    try {
+      let { deletedCount } = await userService.deleteAll();
+      console.log('Users deleted: ', deletedCount.deletedCount);
+      handleLogoutClick();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // Retrieve all the users "that match"
@@ -65,6 +81,9 @@ export default function DashboardPage ({ handleLogout }) {
           <button onClick={handleGetMatch}>Get Match</button>
           <button onClick={handleGoToMessaging}>Messaging</button>
           <button onClick={handleLogoutClick}>Logout</button>
+
+          {/* Only for testing. Remove before deployment */}
+          <button onClick={handleDeleteAllUsers}>Delete All</button>
       </div>
   )
 }

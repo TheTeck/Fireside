@@ -84,6 +84,16 @@ function getAll() {
 };
 
 
+function deleteAll() {
+  return fetch(BASE_URL, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + tokenService.getToken()
+    }
+  }).then(res => res.json());
+}
+
 const userService = {
   signup, 
   logout,
@@ -91,7 +101,8 @@ const userService = {
   getUser,
   getOne,
   getAll,
-  update
+  update,
+  deleteAll
 };
 
 export default userService;

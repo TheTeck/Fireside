@@ -7,7 +7,8 @@ module.exports = {
   login,
   getAll,
   getOne,
-  update
+  update,
+  deleteAll
 }
 
 function createJWT(user) {
@@ -83,6 +84,15 @@ async function login(req, res) {
     });
   } catch (err) {
     return res.status(401).json(err);
+  }
+}
+
+async function deleteAll (req, res) {
+  try {
+    let deletedCount = await User.deleteMany({});
+    res.status(200).json({ deletedCount });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 }
 
