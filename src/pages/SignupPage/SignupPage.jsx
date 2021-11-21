@@ -33,7 +33,7 @@ export default function SignUpPage(props){
       props.handleSignUpOrLogin()
       history.push('/dashboard')
     } catch(err){
-      console.log(err.message)
+      console.log(err.message);
     }
   }
 
@@ -46,8 +46,10 @@ export default function SignUpPage(props){
     setStage(prev => prev + 1);
   }
 
-  if (stage === pageCount)
+  if (stage === pageCount) {
+    setStage(prev => prev + 1);
     handleSubmit();
+  }
 
 
   return (
