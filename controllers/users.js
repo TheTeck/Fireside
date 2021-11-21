@@ -20,23 +20,20 @@ function createJWT(user) {
 }
 
 async function signup (req, res) {
-  let dummy = {
+  let userBuilder = {
     username: req.body.username,
     email: req.body.email,
     age: req.body.age,
     password: req.body.password,
     description: req.body.description,
     whatToOffer: req.body.whatToOffer,
-    ageRanges: {
-      range: req.body.ageRanges.range,
-      low: req.body.ageRanges.low,
-      high: req.body.ageRanges.high
-    },
-    match: req.body.match
+    ageRanges: req.body.ageRanges,
+    match: req.body.match,
+    messages: []
   }
 
   try {
-    const user = await User.create(dummy);
+    const user = await User.create(userBuilder);
     const token = createJWT(user);
     res.json({ token });
   } catch (err) {
@@ -54,10 +51,8 @@ async function update (req, res) {
     user.description = req.body.description;
     user.whatToOffer = req.body.whatToOffer;
     user.ageRanges = req.body.ageRanges;
-    user.ageRanges.range = req.body.ageRanges.range;
-    user.ageRanges.low = req.body.ageRanges.low;
-    user.ageRanges.high = req.body.ageRanges.high;
     user.match = req.body.match;
+    user.messages = req.body.messages;
 
     user.save();
     const token = createJWT(user);
@@ -70,7 +65,7 @@ async function update (req, res) {
 async function login(req, res) {
   try {
     const user = await User.findOne({email: req.body.email});
-    console.log(user)
+  
     if (!user) return res.status(401).json({err: 'bad credentials'});
 
     user.comparePassword(req.body.password, (err, isMatch) => {

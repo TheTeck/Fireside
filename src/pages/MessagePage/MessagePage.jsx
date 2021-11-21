@@ -5,25 +5,42 @@ import './MessagePage.scss';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import userService from '../../utils/userService';
 
-export default function MessagePage ( props ) {
+export default function MessagePage ({ user, handleUpdateUser }) {
 
     const [message, setMessage] = useState('');
     const [otherUser, setOtherUser] = useState({ 
         username: 'user'
     });
 
-    const user = userService.getUser();
     const history = useHistory();
 
     function handleMessageChange (e) {
         setMessage(e.target.value);
     }
 
-    function handleMessageSubmit () {
-        console.log(message)
-        /////////////////////////
-        // Do something else here
-        /////////////////////////
+    // Create a new message object, then append it to the
+    // array of messages of user (same array for otherUser)
+    // Update the user objects with the appended array and
+    // update users in database
+    async function handleMessageSubmit () {
+        let newMessage = { 
+            sender: user.username, 
+            receiver: otherUser.username, 
+            message 
+        };
+        user = userService.getUser();
+        let messages = [...user.messages, newMessage];
+
+        let sender = { ...user, messages };
+        let receiver = { ...otherUser, messages }
+        
+        try {
+            await userService.update(receiver);
+            await userService.update(sender);
+            handleUpdateUser();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     function handleBackClick () {

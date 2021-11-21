@@ -18,7 +18,12 @@ function App() {
   // this  const token = createJWT(user); // where user was the document we created from mongo
 
   function handleSignUpOrLogin(){
-    setUser(userService.getUser()) // getting the user from localstorage decoding the jwt
+    setUser(userService.getUser ()) // getting the user from localstorage decoding the jwt
+  }
+
+  // Alias function to get data from updated token
+  function handleUpdateUser () {
+    handleSignUpOrLogin ();
   }
 
   function handleLogout(){
@@ -44,13 +49,13 @@ function App() {
           { user  ?
             <Switch>
               <Route exact path="/dashboard">
-                <DashboardPage handleLogout={handleLogout} />
+                <DashboardPage handleLogout={handleLogout} user={user} />
               </Route>
               <Route exact path="/messaging">
-                <MessagePage />
+                <MessagePage user={user} handleUpdateUser={handleUpdateUser} />
               </Route>
               <Route exact path="/matching">
-                <MatchingPage />
+                <MatchingPage handleUpdateUser={handleUpdateUser} />
               </Route>
             </Switch>
             :

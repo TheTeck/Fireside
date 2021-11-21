@@ -6,7 +6,7 @@ import userService from "../../utils/userService";
 import MatchSelection from "../../components/MatchSelection/MatchSelection";
 import NoMatches from "../../components/NoMatches/NoMatches";
 
-export default function MatchingPage ( props ) {
+export default function MatchingPage ({ handleUpdateUser }) {
 
   const location = useLocation();
 
@@ -34,6 +34,7 @@ export default function MatchingPage ( props ) {
 
     try {
       await userService.update(updatedUser);
+      handleUpdateUser();
       history.push('/dashboard');
     } catch (err) {
       console.log(err);
