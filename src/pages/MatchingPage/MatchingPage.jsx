@@ -43,7 +43,7 @@ export default function MatchingPage ( props ) {
     return (
       <div>
         {
-          matches ?
+          matches.length ?
           <MatchSelection 
             selectUser={selectUser} 
             skipUser={skipUser} 
