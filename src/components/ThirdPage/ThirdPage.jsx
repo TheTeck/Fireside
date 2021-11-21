@@ -20,7 +20,7 @@ export default function ThirdPage({ goToNextPage }){
 
     // Lift array of ageRanges and go to next page
     function handleCustomClick () {
-        goToNextPage({ ageRanges: ageRanges[0] });
+        goToNextPage({ ageRanges });
     }
 
     function handleAddRangeClick (e) {

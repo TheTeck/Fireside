@@ -9,6 +9,12 @@ const rangeSchema = new mongoose.Schema({
   high: Number
 })
 
+const messageSchema = new mongoose.Schema({
+  sender: String,
+  receiver: String,
+  message: String
+})
+
 const userSchema = new mongoose.Schema({
   username:   {type: String, required: true, unique: true},
   email:      {type: String, required: true, unique: true},
@@ -17,7 +23,8 @@ const userSchema = new mongoose.Schema({
   ageRanges:  [rangeSchema],
   description:[String],
   whatToOffer:[String],
-  match:      String
+  match:      String,
+  messages: [messageSchema]
 }, {
   timestamps: true
 });

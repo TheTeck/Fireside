@@ -4,16 +4,10 @@ import { useHistory } from "react-router";
 import './DashboardPage.scss';
 import userService from "../../utils/userService";
 
-export default function DashboardPage ({ handleLogout }) {
+export default function DashboardPage ({ handleLogout, user }) {
 
   const [matches, setMatches] = useState([]);
-  const [gotAllMatches, setGotAllMatches] = useState(false);
-  const user = userService.getUser();
   const history = useHistory();
-
-  if (!user) {
-    history.push('/');
-  }
 
   function handleGetMatch () {
     history.push({
@@ -35,8 +29,7 @@ export default function DashboardPage ({ handleLogout }) {
   //// Remove before deployment
   async function handleDeleteAllUsers () {
     try {
-      let { deletedCount } = await userService.deleteAll();
-      console.log('Users deleted: ', deletedCount.deletedCount);
+      await userService.deleteAll();
       handleLogoutClick();
     } catch (err) {
       console.log(err);
@@ -45,7 +38,6 @@ export default function DashboardPage ({ handleLogout }) {
 
   // Retrieve all the users "that match"
   async function getAllUsers () {
-    setGotAllMatches(true);
     try {
       let data = await userService.getAll();
       let filteredUsers = filterUsers(data.users);
@@ -58,10 +50,12 @@ export default function DashboardPage ({ handleLogout }) {
   function filterUsers (others) {
     let filtered = others.filter(other => {
       let isMatch = false
-      user.ageRanges.forEach(range => {
+      user.ageRanges.forEach(range => {          
         if (other.age >= range.low && other.age <= range.high)
           isMatch =  true;
       });
+      if (other.username === user.username)
+        isMatch = false;
       return isMatch;
     });
     return filtered;
@@ -69,9 +63,8 @@ export default function DashboardPage ({ handleLogout }) {
 
   // Pull all users whenever dashboard renders
   useEffect(() => {
-    if (!gotAllMatches)
-      getAllUsers();
-  })
+    getAllUsers();
+  }, [])
 
   return (
       <div id="dashboardpage-container">
