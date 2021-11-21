@@ -12,7 +12,6 @@ export default function PageMarker ({ page }) {
                 <Marker thisPage={2} pageOn={page} />
                 <Marker thisPage={3} pageOn={page} />
                 <Marker thisPage={4} pageOn={page} />
-                <Marker thisPage={5} pageOn={page} />
             </div>
         </div>
     )
