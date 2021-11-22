@@ -7,6 +7,7 @@ import userService from "../../utils/userService";
 export default function DashboardPage ({ handleLogout, user }) {
 
   const [matches, setMatches] = useState([]);
+  const [newMsgCount, setNewMsgCount] = useState(0);
   const history = useHistory();
 
   function handleGetMatch () {
@@ -66,11 +67,21 @@ export default function DashboardPage ({ handleLogout, user }) {
     getAllUsers();
   }, [])
 
+  // Get the count of all unread messages
+  if (user.messages.length) {
+    let count = user.messages.reduce((acc, msg) => {
+      return acc + (!msg.viewed && msg.receiver === user.username) ? 1 : 0;
+    }, 0);
+    if (count !== newMsgCount)
+      setNewMsgCount(count);
+  }
+
   return (
       <div id="dashboardpage-container">
           <p>{user.username} was successfully created in the database</p>
           <p>{user.username} is matched with {user.match}</p>
           <p>There are {matches.length} matches</p>
+          <p>There are {newMsgCount} unread messages</p>
           <button onClick={handleGetMatch}>Get Match</button>
           <button onClick={handleGoToMessaging}>Messaging</button>
           <button onClick={handleLogoutClick}>Logout</button>
