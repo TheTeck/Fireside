@@ -23,7 +23,6 @@ export default function MatchSelection ({ selectUser, skipUser, match }) {
     function handleSelectMatch () {
         selectUser({ match: match.username });
     }
-    console.log(match)
 
     let descriptions = match.description ? formatInfo(match.description) : '';
     let offerings = match.whatToOffer ? formatInfo(match.whatToOffer) : '';

@@ -27,17 +27,39 @@ export default function MatchingPage ({ handleUpdateUser }) {
 
   // Add the selected match to the user data
   async function selectUser ({ match }) {
-    let updatedUser = { 
-      ...user,
-      match
+    // let updatedUser = { 
+    //   ...user,
+    //   match
+    // }
+
+    // try {
+    //   await userService.update(updatedUser);
+    //   handleUpdateUser();
+    //   history.push('/dashboard');
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    let newRequest = {
+      requester: user.username,
+      requestee: match
     }
 
+    let userRequests = [...user.requests, newRequest];
+    let updatedUser = { ...user, requests: userRequests };
+
     try {
+      let otherUser = await userService.getOne(match);
+
+      let otherRequests = [...otherUser.user[0].requests, newRequest];
+      let updatedOther = { ...otherUser.user[0], requests: otherRequests };
+      console.log(updatedUser, updatedOther)
+      await userService.update(updatedOther);
       await userService.update(updatedUser);
       handleUpdateUser();
       history.push('/dashboard');
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+        console.log(error);
     }
   }
 
