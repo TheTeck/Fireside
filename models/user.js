@@ -6,7 +6,11 @@ const SALT_ROUNDS = 6;
 const rangeSchema = new mongoose.Schema({
   range: String,
   low: Number,
-  high: Number
+  high: Number,
+  viewed: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const messageSchema = new mongoose.Schema({
