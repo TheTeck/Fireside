@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 
 import './DashboardPage.scss';
 import userService from "../../utils/userService";
+import CustomButton from "../../components/CustomButton/CustomButton";
 
 export default function DashboardPage ({ handleLogout, user }) {
 
@@ -78,16 +79,18 @@ export default function DashboardPage ({ handleLogout, user }) {
 
   return (
       <div id="dashboardpage-container">
-          <p>{user.username} was successfully created in the database</p>
-          <p>{user.username} is matched with {user.match}</p>
-          <p>There are {matches.length} matches</p>
-          <p>There are {newMsgCount} unread messages</p>
-          <button onClick={handleGetMatch}>Get Match</button>
-          <button onClick={handleGoToMessaging}>Messaging</button>
-          <button onClick={handleLogoutClick}>Logout</button>
-
-          {/* Only for testing. Remove before deployment */}
-          <button onClick={handleDeleteAllUsers}>Delete All</button>
+          {
+            user.match ? <p>You are matched with {user.match}</p> : ''
+          }
+          <CustomButton handleCustomClick={handleGetMatch}>{user.match ? 'New Match' : 'Get Match'}</CustomButton>
+          <div id="message-button-wrapper">
+            {
+              newMsgCount ? <div>{newMsgCount}</div> : ''
+            }
+            <CustomButton handleCustomClick={handleGoToMessaging}>Messages</CustomButton>
+          </div>
+          <CustomButton handleCustomClick={handleLogoutClick}>Logout</CustomButton>
+          <CustomButton handleCustomClick={handleDeleteAllUsers}>Delete All</CustomButton>
       </div>
   )
 }
