@@ -19,6 +19,11 @@ const messageSchema = new mongoose.Schema({
   message: String
 })
 
+const matchRequestSchema = new mongoose.Schema({
+  requester: String,
+  requestee: String,
+})
+
 const userSchema = new mongoose.Schema({
   username:   {type: String, required: true, unique: true},
   email:      {type: String, required: true, unique: true},
@@ -28,7 +33,8 @@ const userSchema = new mongoose.Schema({
   description:[String],
   whatToOffer:[String],
   match:      String,
-  messages: [messageSchema]
+  messages: [messageSchema],
+  requests: [matchRequestSchema]
 }, {
   timestamps: true
 });
