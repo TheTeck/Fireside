@@ -53,6 +53,7 @@ async function update (req, res) {
     user.ageRanges = req.body.ageRanges;
     user.match = req.body.match;
     user.messages = req.body.messages;
+    user.requests = req.body.requests;
 
     user.save();
     const token = createJWT(user);
