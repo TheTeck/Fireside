@@ -8,6 +8,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 export default function DashboardPage ({ handleLogout, user }) {
 
   const [matches, setMatches] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [newMsgCount, setNewMsgCount] = useState(0);
   const history = useHistory();
 
@@ -49,6 +50,15 @@ export default function DashboardPage ({ handleLogout, user }) {
     }
   }
 
+  function getAllRequests () {
+    let receivedRequests = user.requests.filter(request => {
+      return request.requestee === user.username
+    })
+    console.log(user)
+    console.log(receivedRequests)
+    setRequests([...receivedRequests]);
+  }
+
   function filterUsers (others) {
     let filtered = others.filter(other => {
       let isMatch = false
@@ -66,6 +76,7 @@ export default function DashboardPage ({ handleLogout, user }) {
   // Pull all users whenever dashboard renders
   useEffect(() => {
     getAllUsers();
+    getAllRequests();
   }, [])
 
   // Get the count of all unread messages
@@ -81,6 +92,9 @@ export default function DashboardPage ({ handleLogout, user }) {
       <div id="dashboardpage-container">
           {
             user.match ? <p>You are matched with {user.match}</p> : ''
+          }
+          {
+            <p>{`You have ${requests.length} connection requests`}</p>
           }
           <CustomButton handleCustomClick={handleGetMatch}>{user.match ? 'New Match' : 'Get Match'}</CustomButton>
           <div id="message-button-wrapper">
