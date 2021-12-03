@@ -8,7 +8,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 export default function DashboardPage ({ handleLogout, user }) {
 
   const [matches, setMatches] = useState([]);
-  const [requests, setRequests] = useState([]);
+  const [requests] = useState(getAllRequests());
   const [newMsgCount, setNewMsgCount] = useState(0);
   const history = useHistory();
 
@@ -39,27 +39,38 @@ export default function DashboardPage ({ handleLogout, user }) {
     }
   }
 
-  // Retrieve all the users "that match"
+  // Retrieve all the users "that match" and users that have sent a match request
   async function getAllUsers () {
     try {
       let data = await userService.getAll();
-      let filteredUsers = filterUsers(data.users);
-      setMatches(filteredUsers);
+      let filteredMatchingUsers = filterMatchUsers(data.users);
+      let filteredRequestingUsers = filterRequestUsers(data.users);
+      console.log(">>>>>>", filteredRequestingUsers)
+      setMatches(filteredMatchingUsers);
     } catch (error) {
       console.log(error);
     }
   }
 
   function getAllRequests () {
-    let receivedRequests = user.requests.filter(request => {
+    let allRequests = user.requests.filter(request => {
       return request.requestee === user.username
-    })
-    console.log(user)
-    console.log(receivedRequests)
-    setRequests([...receivedRequests]);
+    });
+    return [...new Set(allRequests)];
   }
 
-  function filterUsers (others) {
+  function filterRequestUsers(others) {
+    return others.filter(other => {
+      let include = false;
+      requests.forEach(request => {
+        if (request.requester === other.username)
+          include = true;
+      });
+      return include;
+    })
+  }
+
+  function filterMatchUsers (others) {
     let filtered = others.filter(other => {
       let isMatch = false
       user.ageRanges.forEach(range => {          
@@ -76,7 +87,6 @@ export default function DashboardPage ({ handleLogout, user }) {
   // Pull all users whenever dashboard renders
   useEffect(() => {
     getAllUsers();
-    getAllRequests();
   }, [])
 
   // Get the count of all unread messages
@@ -102,6 +112,12 @@ export default function DashboardPage ({ handleLogout, user }) {
               newMsgCount ? <div>{newMsgCount}</div> : ''
             }
             <CustomButton handleCustomClick={handleGoToMessaging}>Messages</CustomButton>
+          </div>
+          <div id="message-button-wrapper">
+            {
+              requests.length ? <div>{requests.length}</div> : ''
+            }
+            <CustomButton handleCustomClick={handleGoToMessaging}>Requests</CustomButton>
           </div>
           <CustomButton handleCustomClick={handleLogoutClick}>Logout</CustomButton>
           <CustomButton handleCustomClick={handleDeleteAllUsers}>Delete All</CustomButton>
