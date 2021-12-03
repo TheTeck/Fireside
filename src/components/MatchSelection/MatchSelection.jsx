@@ -1,12 +1,9 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import './MatchSelection.scss';
 import CustomButton from '../CustomButton/CustomButton';
 
-export default function MatchSelection ({ selectUser, skipUser, match, header }) {
-
-    const history = useHistory();
+export default function MatchSelection ({ selectUser, skipUser, declineUser, match, header, matchesLength }) {
 
     function formatInfo (arr) {
         let output = '';
@@ -24,11 +21,11 @@ export default function MatchSelection ({ selectUser, skipUser, match, header })
     }
 
     function handleNoMatch() {
-        history.push('/dashboard');
+        declineUser(match);
     }
 
     function handleSelectMatch () {
-        selectUser({ match: match.username });
+        selectUser(match);
     }
 
     let descriptions = match.description ? formatInfo(match.description) : '';
@@ -48,7 +45,7 @@ export default function MatchSelection ({ selectUser, skipUser, match, header })
             <p>{`Would you like to chat with ${match.username}?`}</p>
             <CustomButton handleCustomClick={handleSelectMatch}>Yes</CustomButton>
             {
-                match.length > 1 ? <CustomButton handleCustomClick={handleSkipMatch}>Skip</CustomButton>
+                matchesLength > 1 ? <CustomButton handleCustomClick={handleSkipMatch}>Skip</CustomButton>
                 : <CustomButton handleCustomClick={handleNoMatch}>No</CustomButton>
             }
             
