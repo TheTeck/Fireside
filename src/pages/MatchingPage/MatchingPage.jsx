@@ -6,13 +6,11 @@ import userService from "../../utils/userService";
 import MatchSelection from "../../components/MatchSelection/MatchSelection";
 import NoMatches from "../../components/NoMatches/NoMatches";
 
-export default function MatchingPage ({ handleUpdateUser }) {
+export default function MatchingPage ({ handleUpdateUser, user }) {
 
   const location = useLocation();
 
   const [matchIndex, setMatchIndex] = useState(0);
-  
-  const user = userService.getUser();
   const matches = location.state.matches;
   const history = useHistory();
 
@@ -53,7 +51,6 @@ export default function MatchingPage ({ handleUpdateUser }) {
 
       let otherRequests = [...otherUser.user[0].requests, newRequest];
       let updatedOther = { ...otherUser.user[0], requests: otherRequests };
-      console.log(updatedUser, updatedOther)
       await userService.update(updatedOther);
       await userService.update(updatedUser);
       handleUpdateUser();

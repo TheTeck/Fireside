@@ -125,7 +125,7 @@ export default function DashboardPage ({ handleLogout, user }) {
             {
               requests.length ? <div>{requests.length}</div> : ''
             }
-            <CustomButton handleCustomClick={handleGoToMessaging}>Requests</CustomButton>
+            <CustomButton handleCustomClick={handleGoToRequests}>Requests</CustomButton>
           </div>
           <CustomButton handleCustomClick={handleLogoutClick}>Logout</CustomButton>
           <CustomButton handleCustomClick={handleDeleteAllUsers}>Delete All</CustomButton>
