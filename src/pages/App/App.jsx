@@ -10,6 +10,7 @@ import OnBoardingPage from '../OnBoardingPage/OnBoardingPage';
 import MessagePage from '../MessagePage/MessagePage';
 import DashboardPage from '../DashboardPage/DashboardPage';
 import MatchingPage from '../MatchingPage/MatchingPage';
+import RequestsPage from '../RequestsPage/RequestsPage';
 
 function App() {
 
@@ -55,7 +56,10 @@ function App() {
                 <MessagePage user={user} handleUpdateUser={handleUpdateUser} />
               </Route>
               <Route exact path="/matching">
-                <MatchingPage handleUpdateUser={handleUpdateUser} />
+                <MatchingPage handleUpdateUser={handleUpdateUser} user={user} />
+              </Route>
+              <Route exact path="/requests">
+                <RequestsPage handleUpdateUser={handleUpdateUser} user={user} />
               </Route>
             </Switch>
             :
