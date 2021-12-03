@@ -68,6 +68,7 @@ export default function MatchingPage ({ handleUpdateUser, user }) {
             selectUser={selectUser} 
             skipUser={skipUser} 
             match={ matches[matchIndex]}
+            header="Here are your matches!"
           /> : <NoMatches />
         }
       </div>

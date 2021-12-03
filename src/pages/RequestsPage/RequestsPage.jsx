@@ -46,6 +46,7 @@ export default function RequestsPage ({ handleUpdateUser, user }) {
             selectUser={selectUser} 
             skipUser={skipUser} 
             match={ requesters[matchIndex]}
+            header="New Requests"
           /> : <NoMatches />
         }
       </div>
