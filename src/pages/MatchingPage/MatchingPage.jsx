@@ -23,31 +23,22 @@ export default function MatchingPage ({ handleUpdateUser, user }) {
     }
   }
 
-  // Add the selected match to the user data
-  async function selectUser ({ match }) {
-    // let updatedUser = { 
-    //   ...user,
-    //   match
-    // }
+  function declineUser () {
+    history.push('/dashboard');
+  }
 
-    // try {
-    //   await userService.update(updatedUser);
-    //   handleUpdateUser();
-    //   history.push('/dashboard');
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
+  // Create a new request object in both users' requests property
+  async function selectUser (user2) {
     let newRequest = {
       requester: user.username,
-      requestee: match
+      requestee: user2.username
     }
 
     let userRequests = [...user.requests, newRequest];
     let updatedUser = { ...user, requests: userRequests };
 
     try {
-      let otherUser = await userService.getOne(match);
+      let otherUser = await userService.getOne(user2.username);
 
       let otherRequests = [...otherUser.user[0].requests, newRequest];
       let updatedOther = { ...otherUser.user[0], requests: otherRequests };
@@ -67,8 +58,10 @@ export default function MatchingPage ({ handleUpdateUser, user }) {
           <MatchSelection 
             selectUser={selectUser} 
             skipUser={skipUser} 
+            declineUser={declineUser}
             match={ matches[matchIndex]}
             header="Here are your matches!"
+            matchesLength={matches.length}
           /> : <NoMatches />
         }
       </div>
