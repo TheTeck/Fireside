@@ -9,6 +9,7 @@ export default function DashboardPage ({ handleLogout, user }) {
 
   const [matches, setMatches] = useState([]);
   const [requests] = useState(getAllRequests());
+  const [requesters, setRequesters] = useState([]);
   const [newMsgCount, setNewMsgCount] = useState(0);
   const history = useHistory();
 
@@ -17,6 +18,13 @@ export default function DashboardPage ({ handleLogout, user }) {
       pathname: '/matching',
       state: { matches }
     });
+  }
+
+  function handleGoToRequests () {
+    history.push({
+      pathname: '/requests',
+      state: { requesters }
+    })
   }
 
   function handleGoToMessaging () {
@@ -45,8 +53,8 @@ export default function DashboardPage ({ handleLogout, user }) {
       let data = await userService.getAll();
       let filteredMatchingUsers = filterMatchUsers(data.users);
       let filteredRequestingUsers = filterRequestUsers(data.users);
-      console.log(">>>>>>", filteredRequestingUsers)
       setMatches(filteredMatchingUsers);
+      setRequesters(filteredRequestingUsers);
     } catch (error) {
       console.log(error);
     }
