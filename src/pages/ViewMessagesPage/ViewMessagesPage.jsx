@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import './ViewMessagesPage.scss';
 import CustomButton from "../../components/CustomButton/CustomButton";
 
-export default function ViewMessagesPage (props) {
+export default function ViewMessagesPage ({ user }) {
 
-    const location = useLocation();
     const history = useHistory();
-    const messages = location.state.messages
 
     function handleReturnToDashboard () {
         history.push('/dashboard');
@@ -16,9 +14,16 @@ export default function ViewMessagesPage (props) {
 
     return (
         <div id="viewmessagespage-container">
-            <div id="otheruserinfo-container">Other user name</div>
+            <div id="otheruserinfo-container">{user.match ? user.match : 'No Match'}</div>
             <div id="allmessages-container">
-
+                {
+                    user.messages.map((message, index) => {
+                        return (
+                            message.sender === user.username ? <div className="userBubble">{message.message}</div>
+                            : <div className="otherUserBubble">{message.message}</div>
+                        )
+                    })
+                }
             </div>
             <div id="messagesbuttons-container">
                 <CustomButton handleCustomClick={handleReturnToDashboard}>Dashboard</CustomButton>

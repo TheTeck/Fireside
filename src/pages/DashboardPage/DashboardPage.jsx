@@ -32,10 +32,7 @@ export default function DashboardPage ({ handleLogout, user }) {
   }
 
   function handleGoToViewMessages () {
-    history.push({
-      pathname: '/viewMessages',
-      state: { messages: user.messages }
-    });
+    history.push('viewMessages');
   }
 
   function handleLogoutClick () {
