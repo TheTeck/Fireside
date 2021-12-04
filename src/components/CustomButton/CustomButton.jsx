@@ -2,10 +2,15 @@ import React from 'react';
 
 import './CustomButton.scss';
 
-export default function CustomButton (props) {
+export default function CustomButton ({ handleCustomClick, disabled, children }) {
     return (
-        <button onClick={props.handleCustomClick} className="custombutton-container">
-            {props.children}
-        </button>
+        <>
+            {
+                disabled ? <button className="custombutton-container disabled">{children}</button>
+                : <button onClick={handleCustomClick} className="custombutton-container">
+                    {children}
+                </button>
+            }
+        </>
     )
 }

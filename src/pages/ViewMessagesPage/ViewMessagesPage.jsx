@@ -47,8 +47,8 @@ export default function ViewMessagesPage ({ user, handleUpdateUser }) {
                 {
                     user.messages.map((message, index) => {
                         return (
-                            message.sender === user.username ? <div className="userBubble">{message.message}</div>
-                            : <div className="otherUserBubble">{message.message}</div>
+                            message.sender === user.username ? <div className="userBubble" key={index}>{message.message}</div>
+                            : <div className="otherUserBubble" key={index}>{message.message}</div>
                         )
                     })
                 }

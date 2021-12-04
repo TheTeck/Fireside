@@ -10,6 +10,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: $font-primary;
+
+  p {
+    font-size: $font-medium;
+  }
 }
 
 #message-button-wrapper {

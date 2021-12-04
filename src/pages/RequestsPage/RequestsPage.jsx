@@ -72,10 +72,10 @@ export default function RequestsPage ({ handleUpdateUser, user }) {
         ...updatedOtherUser,
         match: user.username
     }
-
+    console.log('///', fullyUpdatedUser)
     try {
-      await userService.update(fullyUpdatedUser);
       await userService.update(fullyUpdatedOtherUser);
+      await userService.update(fullyUpdatedUser);
       handleUpdateUser();
       history.push('/dashboard');
     } catch (err) {
