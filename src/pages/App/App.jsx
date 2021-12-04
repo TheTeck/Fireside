@@ -8,6 +8,7 @@ import userService from '../../utils/userService'
 import HomePage from '../HomePage/HomePage';
 import OnBoardingPage from '../OnBoardingPage/OnBoardingPage';
 import MessagePage from '../MessagePage/MessagePage';
+import ViewMessagesPage from '../ViewMessagesPage/ViewMessagesPage';
 import DashboardPage from '../DashboardPage/DashboardPage';
 import MatchingPage from '../MatchingPage/MatchingPage';
 import RequestsPage from '../RequestsPage/RequestsPage';
@@ -51,6 +52,9 @@ function App() {
             <Switch>
               <Route exact path="/dashboard">
                 <DashboardPage handleLogout={handleLogout} user={user} />
+              </Route>
+              <Route exact path="/viewMessages">
+                <ViewMessagesPage user={user} handleUpdateUser={handleUpdateUser} />
               </Route>
               <Route exact path="/messaging">
                 <MessagePage user={user} handleUpdateUser={handleUpdateUser} />

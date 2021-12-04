@@ -31,6 +31,13 @@ export default function DashboardPage ({ handleLogout, user }) {
     history.push('/messaging');
   }
 
+  function handleGoToViewMessages () {
+    history.push({
+      pathname: '/viewMessages',
+      state: { messages: user.messages }
+    });
+  }
+
   function handleLogoutClick () {
     handleLogout();
     history.push('/');
@@ -119,7 +126,11 @@ export default function DashboardPage ({ handleLogout, user }) {
             {
               newMsgCount ? <div>{newMsgCount}</div> : ''
             }
-            <CustomButton handleCustomClick={handleGoToMessaging}>Messages</CustomButton>
+            {
+              user.messages.length ? <CustomButton handleCustomClick={handleGoToViewMessages}>Messages</CustomButton>
+              : <CustomButton handleCustomClick={handleGoToMessaging}>Messages</CustomButton>
+            }
+            
           </div>
           <div id="message-button-wrapper">
             {
