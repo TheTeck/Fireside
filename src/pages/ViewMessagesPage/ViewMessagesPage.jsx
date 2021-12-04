@@ -20,7 +20,7 @@ export default function ViewMessagesPage ({ user, handleUpdateUser }) {
 
     async function setMessagesAsViewed () {
         const viewedMessages = user.messages.map(msg => {
-            return {...msg, viewed: true };
+            return msg.receiver === user.username ? {...msg, viewed: true } : msg;
         })
 
         try {

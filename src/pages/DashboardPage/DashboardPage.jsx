@@ -103,9 +103,11 @@ export default function DashboardPage ({ handleLogout, user }) {
 
   // Get the count of all unread messages
   if (user.messages.length) {
-    let count = user.messages.reduce((acc, msg) => {
-      return acc + (!msg.viewed && msg.receiver === user.username) ? 1 : 0;
-    }, 0);
+    let count = 0;
+    user.messages.forEach(msg => {
+      if (!msg.viewed && msg.receiver === user.username)
+        count++;
+    })
     if (count !== newMsgCount)
       setNewMsgCount(count);
   }
