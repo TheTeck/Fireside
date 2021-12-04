@@ -16,7 +16,8 @@ const rangeSchema = new mongoose.Schema({
 const messageSchema = new mongoose.Schema({
   sender: String,
   receiver: String,
-  message: String
+  message: String,
+  viewed: Boolean
 })
 
 const matchRequestSchema = new mongoose.Schema({

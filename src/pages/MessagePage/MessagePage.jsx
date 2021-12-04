@@ -26,7 +26,8 @@ export default function MessagePage ({ user, handleUpdateUser }) {
         let newMessage = { 
             sender: user.username, 
             receiver: otherUser.username, 
-            message 
+            message,
+            viewed: false 
         };
         user = userService.getUser();
         let messages = [...user.messages, newMessage];
@@ -38,6 +39,7 @@ export default function MessagePage ({ user, handleUpdateUser }) {
             await userService.update(receiver);
             await userService.update(sender);
             handleUpdateUser();
+            history.push('/viewMessages');
         } catch (error) {
             console.log(error);
         }
