@@ -123,8 +123,8 @@ export default function DashboardPage ({ handleLogout, user }) {
               newMsgCount ? <div>{newMsgCount}</div> : ''
             }
             {
-              user.messages.length ? <CustomButton handleCustomClick={handleGoToViewMessages}>Messages</CustomButton>
-              : <CustomButton handleCustomClick={handleGoToMessaging}>Messages</CustomButton>
+              user.messages.length ? <CustomButton handleCustomClick={handleGoToViewMessages} disabled={!user.match.length}>Messages</CustomButton>
+              : <CustomButton handleCustomClick={handleGoToMessaging} disabled={!user.match.length}>Messages</CustomButton>
             }
             
           </div>
