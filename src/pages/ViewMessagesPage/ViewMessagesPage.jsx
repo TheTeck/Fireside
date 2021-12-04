@@ -1,16 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
 import './ViewMessagesPage.scss';
+import userService from "../../utils/userService";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
-export default function ViewMessagesPage ({ user }) {
+export default function ViewMessagesPage ({ user, handleUpdateUser }) {
 
     const history = useHistory();
 
     function handleReturnToDashboard () {
         history.push('/dashboard');
     }
+
+    function handleWriteMessage () {
+        history.push('/messaging');
+    }
+
+
+    async function setMessagesAsViewed () {
+        const viewedMessages = user.messages.map(msg => {
+            return {...msg, viewed: true };
+        })
+
+        try {
+            const updatedUser = {
+                ...user,
+                messages: viewedMessages
+            }
+            await userService.update(updatedUser);
+            handleUpdateUser();
+            history.push('/viewMessages');
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        setMessagesAsViewed();
+    }, []);
 
     return (
         <div id="viewmessagespage-container">
@@ -26,6 +54,7 @@ export default function ViewMessagesPage ({ user }) {
                 }
             </div>
             <div id="messagesbuttons-container">
+                <CustomButton handleCustomClick={handleWriteMessage}>Write Message</CustomButton>
                 <CustomButton handleCustomClick={handleReturnToDashboard}>Dashboard</CustomButton>
             </div>            
         </div>
