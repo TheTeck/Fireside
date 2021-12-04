@@ -115,10 +115,7 @@ export default function DashboardPage ({ handleLogout, user }) {
   return (
       <div id="dashboardpage-container">
           {
-            user.match ? <p>You are matched with {user.match}</p> : ''
-          }
-          {
-            <p>{`You have ${requests.length} connection requests`}</p>
+            user.match ? <p>You are matched with {user.match}</p> : <p>You are not matched with a user yet.</p>
           }
           <CustomButton handleCustomClick={handleGetMatch}>{user.match ? 'New Match' : 'Get Match'}</CustomButton>
           <div id="message-button-wrapper">
@@ -135,7 +132,7 @@ export default function DashboardPage ({ handleLogout, user }) {
             {
               requests.length ? <div>{requests.length}</div> : ''
             }
-            <CustomButton handleCustomClick={handleGoToRequests}>Requests</CustomButton>
+            <CustomButton handleCustomClick={handleGoToRequests} disabled={!requests.length}>Requests</CustomButton>
           </div>
           <CustomButton handleCustomClick={handleLogoutClick}>Logout</CustomButton>
           <CustomButton handleCustomClick={handleDeleteAllUsers}>Delete All</CustomButton>
