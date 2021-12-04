@@ -27,6 +27,18 @@
 #allmessages-container {
   width: 100%;
   height: 75vh;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  div {
+    max-width: 80%;
+    color: $color-font-light;
+    font-size: $font-medium;
+    padding: 10px 15px;
+    border-radius: 10px;
+  }
 }
 
 #messagesbuttons-container {
@@ -36,4 +48,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.userBubble {
+  margin: 5px 0 0 auto;
+}
+
+.otherUserBubble {
+  margin: 5px auto 0 0;
+  background-color: $color-font-dark;
 }
