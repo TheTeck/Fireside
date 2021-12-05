@@ -40,17 +40,6 @@ export default function DashboardPage ({ handleLogout, user }) {
     history.push('/');
   }
 
-  //// Only for testing database
-  //// Remove before deployment
-  async function handleDeleteAllUsers () {
-    try {
-      await userService.deleteAll();
-      handleLogoutClick();
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   // Retrieve all the users "that match" and users that have sent a match request
   async function getAllUsers () {
     try {
@@ -135,7 +124,6 @@ export default function DashboardPage ({ handleLogout, user }) {
             <CustomButton handleCustomClick={handleGoToRequests} disabled={!requests.length}>Requests</CustomButton>
           </div>
           <CustomButton handleCustomClick={handleLogoutClick}>Logout</CustomButton>
-          <CustomButton handleCustomClick={handleDeleteAllUsers}>Delete All</CustomButton>
       </div>
   )
 }
