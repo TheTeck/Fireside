@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
 import './ViewMessagesPage.scss';
@@ -16,7 +16,6 @@ export default function ViewMessagesPage ({ user, handleUpdateUser }) {
     function handleWriteMessage () {
         history.push('/messaging');
     }
-
 
     async function setMessagesAsViewed () {
         const viewedMessages = user.messages.map(msg => {
