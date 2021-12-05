@@ -11,7 +11,7 @@ export default function RequestsPage ({ handleUpdateUser, user }) {
   const location = useLocation();
 
   const [matchIndex, setMatchIndex] = useState(0);
-  const [requesters, setRequesters] = useState(location.state.requesters);
+  const [requesters] = useState(location.state.requesters);
   const history = useHistory();
 
   // Go through the array of matches
@@ -60,17 +60,18 @@ export default function RequestsPage ({ handleUpdateUser, user }) {
 
   // Add the selected requester to the user data
   async function selectUser (user2) {
-
     const [updatedUser, updatedOtherUser] = removeRequest(user, user2);
 
     let fullyUpdatedUser = { 
       ...updatedUser,
-      match: user2.username
+      match: user2.username,
+      messages: []
     }
 
     let fullyUpdatedOtherUser = {
         ...updatedOtherUser,
-        match: user.username
+        match: user.username,
+        messages: []
     }
     console.log('///', fullyUpdatedUser)
     try {
